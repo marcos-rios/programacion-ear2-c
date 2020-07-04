@@ -6,7 +6,7 @@ int main()
     FILE   *fpPant = fopen("pantalla.txt", "wt");
 
     if(fpPant == NULL)      // si no puede abrir el archivo
-        fpPant = stdout;        // mostrará por consola
+        fpPant = stdout;        // mostrarï¿½ por consola
 
     probarPrimitivasUno(fpPant);
 
@@ -34,7 +34,7 @@ void probarPrimitivasUno(FILE *fpPant)
     cant = crearYcargarLista(&lista);
     fprintf(fpPant, "En la lista hay %d examenes finales.\n\n", cant);
     fprintf(fpPant, "Mostrando los examenes finales.\n");
-    cant = mostrarLista(&lista, mostrarFinal, fpPant);
+    cant = mostrarLista_MIO(&lista, mostrarFinal_MIO, fpPant);
     fprintf(fpPant, "Se mostraron %d examenes finales.\n\n", cant);
 
     fprintf(fpPant, "Eliminar y mostrar los que dieron mas de un final.\n");
@@ -62,7 +62,7 @@ void probarPrimitivasDos(FILE *fpPant)
     cant = crearYcargarLista(&lista);
     fprintf(fpPant, "En la lista hay %d examenes finales.\n\n", cant);
     fprintf(fpPant, "Mostrando los examenes finales.\n");
-    cant = mostrarLista(&lista, mostrarFinal, fpPant);
+    cant = mostrarLista_MIO(&lista, mostrarFinal_MIO, fpPant);
     fprintf(fpPant, "Se mostraron %d examenes finales.\n\n", cant);
 
     fprintf(fpPant, "Eliminar y mostrar los que dieron un solo final.\n");
