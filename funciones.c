@@ -4,6 +4,7 @@
 /**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**/
 /**//**//* CUALQUIER INCLUDE DE BIBLIOTECA QUE NECESITE, HÁGALO ACÁ   *//**//**/
 
+#include "stdlib.h"
 
 /**//**//* CUALQUIER INCLUDE DE BIBLIOTECA QUE NECESITE, HÁGALO ACÁ   *//**//**/
 /**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**/
@@ -40,12 +41,10 @@ void mostrarFinal_MIO(const void *d, FILE *fp)
     }
 }
 
-/**
-int  compararFinal_MIO(const void *d1, const void *d2)
+int compararFinal_MIO(const void *d1, const void *d2)
 {
-
+    return ((const tFinal*)d1)->DNI - ((const tFinal*)d2)->DNI;
 }
- **/
 
 /**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**/
 /**//* para el TDA LISTA                                                  *//**/
@@ -53,30 +52,85 @@ int  compararFinal_MIO(const void *d1, const void *d2)
 int mostrarLista_MIO(const tLista *p,
                      void (*mostrar)(const void *, FILE *), FILE *fp)
 {
-    int cont = 0;
-    while(*p)
+    int cant = 0;
+    if(p != NULL && fp != NULL && mostrar != NULL && *p != NULL)
     {
-        cont++;
-        mostrar(p, fp);
+        mostrar(NULL, fp);
+        do
+        {
+            mostrar((*p)->info, fp);
+            p = &(*p)->sig;
+            cant++;
+        }
+        while(*p != NULL);
     }
-    return cont;
+    return cant;
 }
 
-/**
-int eliminarYMostrarUnicos_MIO(tLista *p, FILE *fpPant,
-                               int comparar(const void *, const void *),
-                               void mostrar(const void *, FILE *))
-{
+// int eliminarYMostrarUnicos_MIO(tLista *p, FILE *fpPant,
+//                                int comparar(const void *, const void *),
+//                                void mostrar(const void *, FILE *))
+// {
+//     if(p == NULL)
+//         return 0;
 
-}
- **/
-/**
+//     int cant = 0;
+//     tNodo *elim;
+
+//     while(*p){
+//     }
+//     return cant;
+// }
+
+
 int eliminarYMostrarRepetidos_MIO(tLista *p, FILE *fpPant,
                                   int comparar(const void *, const void *),
                                   void mostrar(const void *, FILE *))
 {
+    int cant = 0;
+    if(p && *p && (*p)->sig)
+    {
+        int esPrimero = 1;
+        int huboDuplicado = 0;
+        tNodo *temp;
+        tLista *cp;
 
+        mostrar(NULL, fpPant);
+        while(p && *p && (*p)->sig)
+        {
+            cp = p;
+            while(cp && *cp && (*cp)->sig)
+            {
+                if(comparar((*p)->info, (*cp)->sig->info) == 0)
+                {
+                    cant++;
+                    huboDuplicado = 1;
+                    if(esPrimero){
+                        mostrar((*p)->info, fpPant);
+                        esPrimero = 0;
+                    }
+                    temp = (*cp)->sig;
+                    mostrar(temp->info, fpPant);
+                    (*cp)->sig = temp->sig;
+                    free(temp->info);
+                    free(temp);
+                }
+                cp = &(*cp)->sig;
+            }
+            if(huboDuplicado){
+                cant++;
+                temp = *p;
+                p = &(temp->sig);
+                free(temp->info);
+                free(temp);
+                esPrimero = 1;
+                huboDuplicado = 0;
+            } else {
+                p = &(*p)->sig;
+            }
+        }
+    }
+    return cant;
 }
- **/
 /**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**/
 
