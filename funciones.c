@@ -71,38 +71,36 @@ int eliminarYMostrarUnicos_MIO(tLista *p, FILE *fpPant,
                                int comparar(const void *, const void *),
                                void mostrar(const void *, FILE *))
 {
+    tLista *cp = p;
+    tLista *ini = p;
+    tNodo *aux;
     int cant = 0;
     int dup = 0;
-
-    if(*p)
+    mostrar(NULL, fpPant);
+    while(*ini)
     {
-        mostrar(NULL, fpPant);
-        tLista *cp = p;
-        tNodo *recorre = *p;
-        while(*cp)
+        p=cp;
+        while(*p && dup==0)
         {
-            recorre = *cp;
-            while(recorre && (dup = !comparar((*cp)->info, recorre->info) == 0) && *cp != recorre)
-            {
-                recorre = recorre->sig;
-            }
-            if(dup == 0)
-            {
-                cant++;
-                *p = recorre->sig;
-                mostrar(recorre->info, fpPant);
-                free(recorre->info);
-                free(recorre);
-            }
-            else
-            {
-                p = &(*p)->sig;
-            }
-            recorre = *p;
-            cp = &(*cp)->sig;
+            if(*ini!=*p && comparar((*ini)->info,(*p)->info)==0)
+                dup=1;
+            p=&(*p)->sig;
+        }
+        if(dup==0)
+        {
+            mostrar((*ini)->info,fpPant);
+            aux=*ini;
+            *ini=aux->sig;
+            free(aux->info);
+            free(aux);
+            cant++;
+        }
+        else
+        {
+            dup=0;
+            ini=&(*ini)->sig;
         }
     }
-
     return cant;
 }
 
