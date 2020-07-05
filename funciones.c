@@ -67,65 +67,97 @@ int mostrarLista_MIO(const tLista *p,
     return cant;
 }
 
-// int eliminarYMostrarUnicos_MIO(tLista *p, FILE *fpPant,
-//                                int comparar(const void *, const void *),
-//                                void mostrar(const void *, FILE *))
-// {
-//     if(p == NULL)
-//         return 0;
-
-//     int cant = 0;
-//     tNodo *elim;
-
-//     while(*p){
-//     }
-//     return cant;
-// }
+//int eliminarYMostrarUnicos_MIO(tLista *p, FILE *fpPant,
+//                               int comparar(const void *, const void *),
+//                               void mostrar(const void *, FILE *))
+//{
+//    if(p == NULL)
+//    {
+//        return 0;
+//    }
+//    int esUnico = 1;
+//
+//    while(*p)
+//    {
+//        while(){
+//
+//        }
+//        if(esUnico)
+//        {
+//            cant++;
+//
+//
+//        }
+//    }
+//    return cant;
+//}
 
 
 int eliminarYMostrarRepetidos_MIO(tLista *p, FILE *fpPant,
                                   int comparar(const void *, const void *),
                                   void mostrar(const void *, FILE *))
 {
+
+//    int cant=0;
+//    while(*p){
+//        mostrar(NULL, fpPant);
+//        while((*p)->sig && !comparar((*p)->info, (*p)->sig->info)){
+//            if(mostrar){
+//                mostrar((*p)->sig->info, fpPant);
+//            }
+//
+//            tNodo *aux = *p;
+//            *p = aux->sig;
+//
+//            cant++;
+//            free(aux->info);
+//            free(aux);
+//        }
+//    }
     int cant = 0;
-    if(p && *p && (*p)->sig)
+    if(*p && (*p)->sig)
     {
         int esPrimero = 1;
         int huboDuplicado = 0;
-        tNodo *temp;
+        tNodo *aux;
         tLista *cp;
 
         mostrar(NULL, fpPant);
-        while(p && *p && (*p)->sig)
+        while(*p && (*p)->sig)
         {
-            cp = p;
-            while(cp && *cp && (*cp)->sig)
+            cp = &(*p)->sig;
+            while(*cp && (*cp)->sig)
             {
                 if(comparar((*p)->info, (*cp)->sig->info) == 0)
                 {
                     cant++;
                     huboDuplicado = 1;
-                    if(esPrimero){
+                    if(esPrimero)
+                    {
                         mostrar((*p)->info, fpPant);
                         esPrimero = 0;
                     }
-                    temp = (*cp)->sig;
-                    mostrar(temp->info, fpPant);
-                    (*cp)->sig = temp->sig;
-                    free(temp->info);
-                    free(temp);
+                    aux = (*cp)->sig;
+                    mostrar(aux->info, fpPant);
+                    (*cp)->sig = aux->sig;
+                    free(aux->info);
+                    free(aux);
+                } else {
+                    cp = &(*cp)->sig;
                 }
-                cp = &(*cp)->sig;
             }
-            if(huboDuplicado){
+            if(huboDuplicado)
+            {
                 cant++;
-                temp = *p;
-                p = &(temp->sig);
-                free(temp->info);
-                free(temp);
+                aux = *p;
+                *p= aux->sig;
+                free(aux->info);
+                free(aux);
                 esPrimero = 1;
                 huboDuplicado = 0;
-            } else {
+            }
+            else
+            {
                 p = &(*p)->sig;
             }
         }
