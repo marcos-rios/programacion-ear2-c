@@ -34,17 +34,15 @@ void probarPrimitivasUno(FILE *fpPant)
     cant = crearYcargarLista(&lista);
     fprintf(fpPant, "En la lista hay %d examenes finales.\n\n", cant);
     fprintf(fpPant, "Mostrando los examenes finales.\n");
-    cant = mostrarLista_MIO(&lista, mostrarFinal_MIO, fpPant);
+    cant = mostrarLista(&lista, mostrarFinal, fpPant);
     fprintf(fpPant, "Se mostraron %d examenes finales.\n\n", cant);
 
     fprintf(fpPant, "Eliminar y mostrar los que dieron mas de un final.\n");
-    cantRepe = eliminarYMostrarRepetidos(&lista, fpPant,
-                                         compararFinal,mostrarFinal);
+    cantRepe = eliminarYMostrarRepetidos(&lista, fpPant, compararFinal, mostrarFinal);
     fprintf(fpPant, "Se eliminaron %d nodos repetidos.\n\n", cantRepe);
 
     fprintf(fpPant, "Eliminar y mostrar los que dieron un solo final.\n");
-    cantUnic = eliminarYMostrarUnicos(&lista, fpPant,
-                                      compararFinal, mostrarFinal);
+    cantUnic = eliminarYMostrarUnicos(&lista, fpPant, compararFinal, mostrarFinal);
     fprintf(fpPant, "Se eliminaron %d nodos unicos.\n\n\n", cantUnic);
 }
 
@@ -62,17 +60,15 @@ void probarPrimitivasDos(FILE *fpPant)
     cant = crearYcargarLista(&lista);
     fprintf(fpPant, "En la lista hay %d examenes finales.\n\n", cant);
     fprintf(fpPant, "Mostrando los examenes finales.\n");
-    cant = mostrarLista_MIO(&lista, mostrarFinal_MIO, fpPant);
+    cant = mostrarLista(&lista, mostrarFinal, fpPant);
     fprintf(fpPant, "Se mostraron %d examenes finales.\n\n", cant);
 
     fprintf(fpPant, "Eliminar y mostrar los que dieron un solo final.\n");
-    cantUnic = eliminarYMostrarUnicos(&lista, fpPant,
-                                      compararFinal, mostrarFinal);
+    cantUnic = eliminarYMostrarUnicos(&lista, fpPant, compararFinal, mostrarFinal);
     fprintf(fpPant, "Se eliminaron %d nodos unicos.\n\n", cantUnic);
 
     fprintf(fpPant, "Eliminar y mostrar los que dieron mas de un final.\n");
-    cantRepe = eliminarYMostrarRepetidos(&lista, fpPant,
-                                         compararFinal,mostrarFinal);
+    cantRepe = eliminarYMostrarRepetidos(&lista, fpPant, compararFinal, mostrarFinal);
     fprintf(fpPant, "Se eliminaron %d nodos repetidos.\n", cantRepe);
 }
 

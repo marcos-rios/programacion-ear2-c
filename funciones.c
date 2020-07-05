@@ -1,9 +1,10 @@
-/**//* 22.333.444-PEREZ_DEL_RIO,JuanManuel-(07-2299) *//**/
+/**//* 35.588.676-RIOS,MarcosAdrian-(01-2964) *//**/
 
 
 /**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**/
 /**//**//* CUALQUIER INCLUDE DE BIBLIOTECA QUE NECESITE, HÁGALO ACÁ   *//**//**/
 
+#include "stdlib.h"
 
 /**//**//* CUALQUIER INCLUDE DE BIBLIOTECA QUE NECESITE, HÁGALO ACÁ   *//**//**/
 /**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**/
@@ -40,12 +41,10 @@ void mostrarFinal_MIO(const void *d, FILE *fp)
     }
 }
 
-/**
-int  compararFinal_MIO(const void *d1, const void *d2)
+int compararFinal_MIO(const void *d1, const void *d2)
 {
-
+    return ((const tFinal*)d1)->DNI - ((const tFinal*)d2)->DNI;
 }
- **/
 
 /**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**/
 /**//* para el TDA LISTA                                                  *//**/
@@ -53,30 +52,114 @@ int  compararFinal_MIO(const void *d1, const void *d2)
 int mostrarLista_MIO(const tLista *p,
                      void (*mostrar)(const void *, FILE *), FILE *fp)
 {
-    int cont = 0;
-    while(*p)
+    int cant = 0;
+    if(p != NULL && fp != NULL && mostrar != NULL && *p != NULL)
     {
-        cont++;
-        mostrar(p, fp);
+        mostrar(NULL, fp);
+        do
+        {
+            mostrar((*p)->info, fp);
+            p = &(*p)->sig;
+            cant++;
+        }
+        while(*p != NULL);
     }
-    return cont;
+    return cant;
 }
 
-/**
 int eliminarYMostrarUnicos_MIO(tLista *p, FILE *fpPant,
                                int comparar(const void *, const void *),
                                void mostrar(const void *, FILE *))
 {
-
+    tLista *cp = p;
+    tLista *ini = p;
+    tNodo *aux;
+    int cant = 0;
+    int dup = 0;
+    mostrar(NULL, fpPant);
+    while(*ini)
+    {
+        p=cp;
+        while(*p && dup==0)
+        {
+            if(*ini!=*p && comparar((*ini)->info,(*p)->info)==0)
+                dup=1;
+            p=&(*p)->sig;
+        }
+        if(dup==0)
+        {
+            mostrar((*ini)->info,fpPant);
+            aux=*ini;
+            *ini=aux->sig;
+            free(aux->info);
+            free(aux);
+            cant++;
+        }
+        else
+        {
+            dup=0;
+            ini=&(*ini)->sig;
+        }
+    }
+    return cant;
 }
- **/
-/**
+
+
 int eliminarYMostrarRepetidos_MIO(tLista *p, FILE *fpPant,
                                   int comparar(const void *, const void *),
                                   void mostrar(const void *, FILE *))
 {
+    int cant = 0;
+    if(*p && (*p)->sig)
+    {
+        int esPrimero = 1;
+        int huboDuplicado = 0;
+        tNodo *aux;
+        tLista *cp;
 
+        mostrar(NULL, fpPant);
+        while(*p && (*p)->sig)
+        {
+            cp = &(*p)->sig;
+            while(*cp && (*cp)->sig)
+            {
+                if(comparar((*p)->info, (*cp)->sig->info) == 0)
+                {
+                    cant++;
+                    huboDuplicado = 1;
+                    if(esPrimero)
+                    {
+                        mostrar((*p)->info, fpPant);
+                        esPrimero = 0;
+                    }
+                    aux = (*cp)->sig;
+                    mostrar(aux->info, fpPant);
+                    (*cp)->sig = aux->sig;
+                    free(aux->info);
+                    free(aux);
+                }
+                else
+                {
+                    cp = &(*cp)->sig;
+                }
+            }
+            if(huboDuplicado)
+            {
+                cant++;
+                aux = *p;
+                *p= aux->sig;
+                free(aux->info);
+                free(aux);
+                esPrimero = 1;
+                huboDuplicado = 0;
+            }
+            else
+            {
+                p = &(*p)->sig;
+            }
+        }
+    }
+    return cant;
 }
- **/
 /**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**/
 
