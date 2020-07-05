@@ -107,36 +107,6 @@ int eliminarYMostrarUnicos_MIO(tLista *p, FILE *fpPant,
 }
 
 
-//        tLista *cp = p;
-//        tNodo *aux = *p;
-//        tNodo *aux = *p;
-//        tNodo *aux = *p;
-//        while(*cp)
-//        {
-//            aux = *p;
-//            dup = 0;
-//            cp = &(*p)->sig;
-//
-//            while(*cp && dup == 0 && (dup = !comparar((*p)->info, (*cp)->info) == 0))
-//            {
-//                cp = &(*cp)->sig;
-//            }
-//            if(dup == 0)
-//            {
-//                cant++;
-//                *p = aux->sig;
-//                mostrar(aux->info, fpPant);
-//                free(aux->info);
-//                free(aux);
-//            }
-//            else
-//            {
-//                p = &(*p)->sig;
-//            }
-//        }
-
-
-
 int eliminarYMostrarRepetidos_MIO(tLista *p, FILE *fpPant,
                                   int comparar(const void *, const void *),
                                   void mostrar(const void *, FILE *))
